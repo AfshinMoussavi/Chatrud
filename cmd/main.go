@@ -10,6 +10,7 @@ import (
 	"Chat-Websocket/pkg/redisPkg"
 	"Chat-Websocket/pkg/utils"
 	"Chat-Websocket/pkg/validatorPkg"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -18,7 +19,7 @@ import (
 
 func main() {
 	r := gin.Default()
-
+	fmt.Println("test")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	cfgPath := utils.GetConfigPath()
