@@ -1,0 +1,180 @@
+definitions:
+  user.CreateUserReq:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      username:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - email
+    - password
+    - phone
+    - username
+    type: object
+  user.EditUserReq:
+    properties:
+      email:
+        type: string
+      phone:
+        type: string
+      username:
+        maxLength: 100
+        minLength: 2
+        type: string
+    type: object
+  user.LoginUserReq:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/auth/edit:
+    put:
+      consumes:
+      - application/json
+      description: Update the information of the logged-in user
+      parameters:
+      - description: User data to be updated
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.EditUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid Input Data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized - Invalid user
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Edit user information
+      tags:
+      - auth
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user and generate a JWT token
+      parameters:
+      - description: User login data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid Input Data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized - Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User login
+      tags:
+      - auth
+  /api/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create and register a new user in the system
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created user
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid Input Data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - auth
+  /api/auth/users:
+    get:
+      description: Retrieve all users from the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get list of users
+      tags:
+      - auth
+swagger: "2.0"

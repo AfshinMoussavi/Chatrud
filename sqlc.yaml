@@ -1,0 +1,11 @@
+version: "2"
+
+sql:
+  - engine: "postgresql"              # The database engine you're using
+    schema: "models"                  # Path to SQL files defining table structures
+    queries: "models/"                # Path to SQL files with SELECT/INSERT/UPDATE/DELETE queries
+    gen:
+      go:
+        package: "db"                 # Package name for generated Go code
+        out: "internal/db"            # Output directory for generated Go code
+

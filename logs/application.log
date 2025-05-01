@@ -1,0 +1,20 @@
+{"level":"fatal","ts":"2025-05-01T09:54:59.691+0330","caller":"loggerPkg/logger_impl.go:132","msg":"💀 [Redis init error:  redis connection failed: dial tcp [::1]:6379: connectex: No connection could be made because the target machine actively refused it.]"}
+{"level":"info","ts":"2025-05-01T10:00:09.610+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:00:09.611+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:02:37.456+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:02:37.456+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:03:54.455+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from database]"}
+{"level":"info","ts":"2025-05-01T10:04:18.273+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:04:18.273+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:04:47.094+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from redis]"}
+{"level":"info","ts":"2025-05-01T10:06:12.077+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:06:12.077+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:06:19.162+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from redis]"}
+{"level":"info","ts":"2025-05-01T10:08:48.080+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:08:48.080+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:14:00.796+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:14:00.797+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:19:04.913+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:19:04.913+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:22:19.188+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-01T10:22:19.189+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}

@@ -1,0 +1,24 @@
+server:
+  port: "8080"
+
+logger:
+  development: true
+  disableCaller: false
+  disableStacktrace: false
+  encoding: json
+  level: info
+
+postgres:
+  postgresqlHost: localhost
+  postgresqlPort: 5432
+  postgresqlUser: postgres
+  postgresqlPassword: 1234
+  postgresqlDbname: chat_db
+  postgresqlSslmode: disable
+  pgDriver: postgres
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
