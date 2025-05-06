@@ -7,5 +7,6 @@ sql:
     gen:
       go:
         package: "db"                 # Package name for generated Go code
+        emit_interface: true
         out: "internal/db"            # Output directory for generated Go code
 

@@ -34,6 +34,9 @@ stoppostgres:
 swagger:
 	swag init --generalInfo cmd/main.go
 
-.PHONY: postgresinit postgres createdb dropdb migrateup migratedown redisinit rediscli redislog stopredis stoppostgres swagger
+mockery:
+	mockery
+
+.PHONY: postgresinit postgres createdb dropdb migrateup migratedown redisinit rediscli redislog stopredis stoppostgres swagger mockery
 
 

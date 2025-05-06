@@ -43,6 +43,19 @@ services:
     networks:
       - mynetwork
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./pkg/monitorPkg/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./pkg/monitorPkg/alert.rules.yml:/etc/prometheus/alert.rules.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - mynetwork
+    depends_on:
+      - app
+
   migrate:
     image: migrate/migrate
 #    command: -path /migrations -database "postgres://postgres:1234@postgres_container:5432/chat_db?sslmode=disable" up

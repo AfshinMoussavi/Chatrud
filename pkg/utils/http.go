@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"os"
 )
@@ -24,4 +25,8 @@ func HashPassword(password string) (string, error) {
 
 func CheckPassword(password, hash string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+}
+
+func GenerateRandomID() string {
+	return uuid.New().String()
 }

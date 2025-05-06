@@ -1,25 +1,28 @@
 package ws
 
-import "github.com/gin-gonic/gin"
+import (
+	"Chat-Websocket/internal/db"
+	"context"
+	"github.com/gorilla/websocket"
+	"net/http"
+)
 
-type HubInterface interface {
-	Run()
-	RegisterClient(c *Client)
-	UnregisterClient(c *Client)
-	BroadcastMessage(m *Message)
-	GetRooms() []*Room
-	GetClients(roomID string) []*Client
-	CreateRoom(room *Room)
+type IChatService interface {
+	CreateRoomService(ctx context.Context, req CreateRoomReq) (*Room, error)
 }
 
-type ClientInterface interface {
-	ReadMessage(hub HubInterface)
-	WriteMessage()
+type IChatRepository interface {
+	CreateRoomRepository(ctx context.Context, name string) (db.Room, error)
 }
 
-type HandlerInterface interface {
-	CreateRoom(c *gin.Context)
-	JoinRoom(c *gin.Context)
-	GetRooms(c *gin.Context)
-	GetClients(c *gin.Context)
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+type CreateRoomReq struct {
+	Name string `json:"name" binding:"required"`
 }

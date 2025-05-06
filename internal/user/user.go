@@ -3,6 +3,7 @@ package user
 import (
 	"Chat-Websocket/internal/db"
 	"context"
+	"github.com/gin-gonic/gin"
 )
 
 type IUserRepository interface {
@@ -20,6 +21,13 @@ type IUserService interface {
 	ListUserService(ctx context.Context) (*[]CreateUserRes, error)
 	LoginUserService(ctx context.Context, req *LoginUserReq) (*LoginUserRes, error)
 	UpdateUserService(ctx context.Context, req *EditUserReq) (*EditUserRes, error)
+}
+
+type IUserHandler interface {
+	CreateUserHandler(c *gin.Context)
+	ListUserHandler(c *gin.Context)
+	LoginUserHandler(c *gin.Context)
+	EditUserHandler(c *gin.Context)
 }
 
 type CreateUserReq struct {

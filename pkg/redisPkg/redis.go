@@ -1,25 +1,13 @@
 package redisPkg
 
 import (
-	"Chat-Websocket/config"
 	"context"
-	"fmt"
 	"github.com/redis/go-redis/v9"
+	"time"
 )
 
-var Ctx = context.Background()
-var Rdb *redis.Client
-
-func InitRedis(cfg *config.Config) error {
-	address := fmt.Sprintf("%s:%s", cfg.Redis.Host, cfg.Redis.Port)
-	Rdb = redis.NewClient(&redis.Options{
-		Addr:     address,
-		Password: cfg.Redis.Password,
-		DB:       cfg.Redis.Db,
-	})
-
-	if _, err := Rdb.Ping(Ctx).Result(); err != nil {
-		return fmt.Errorf("redis connection failed: %v", err)
-	}
-	return nil
+type IRedis interface {
+	Get(ctx context.Context, key string) *redis.StringCmd
+	Set(ctx context.Context, key string, value interface{}, expiration time.Duration) *redis.StatusCmd
+	Del(ctx context.Context, keys ...string) *redis.IntCmd
 }

@@ -1,21 +1,20 @@
 package ws
 
-// Room represents a chat room with connected clients
+import "fmt"
+
 type Room struct {
-	ID      string             `json:"id"`      // Unique identifier of the room
-	Name    string             `json:"name"`    // Name of the room
-	Clients map[string]*Client `json:"clients"` // Connected clients in the room
+	ID      int32              `json:"id"`
+	Name    string             `json:"name"`
+	Clients map[string]*Client `json:"clients"`
 }
 
-// Hub manages all rooms and handles client registration, unregistration, and broadcasting
 type Hub struct {
-	Rooms      map[string]*Room // All active rooms
-	Register   chan *Client     // Channel for registering new clients
-	Unregister chan *Client     // Channel for unregistering clients
-	Broadcast  chan *Message    // Channel for broadcasting messages to clients
+	Rooms      map[string]*Room
+	Register   chan *Client
+	Unregister chan *Client
+	Broadcast  chan *Message
 }
 
-// NewHub creates and returns a new Hub instance
 func NewHub() *Hub {
 	return &Hub{
 		Rooms:      make(map[string]*Room),
@@ -25,43 +24,44 @@ func NewHub() *Hub {
 	}
 }
 
-// Run starts the hub's main event loop
 func (h *Hub) Run() {
 	for {
 		select {
 		case cl := <-h.Register:
 			// Handle client registration
-			if _, ok := h.Rooms[cl.RoomID]; ok {
-				r := h.Rooms[cl.RoomID]
-
-				if _, ok := r.Clients[cl.ID]; !ok {
-					r.Clients[cl.ID] = cl
+			if room, ok := h.Rooms[cl.RoomID]; ok {
+				room.Clients[cl.ID] = cl
+				h.Broadcast <- &Message{
+					Content:  fmt.Sprintf("%s has joined the room", cl.Username),
+					RoomID:   cl.RoomID,
+					Username: cl.Username,
 				}
 			}
 
 		case cl := <-h.Unregister:
 			// Handle client unregistration
-			if _, ok := h.Rooms[cl.RoomID]; ok {
-				if _, ok := h.Rooms[cl.RoomID].Clients[cl.ID]; ok {
-					// If the room still has clients, broadcast user left message
-					if len(h.Rooms[cl.RoomID].Clients) != 0 {
-						h.Broadcast <- &Message{
-							Content:  "user left the chat",
-							RoomID:   cl.RoomID,
-							Username: cl.Username,
-						}
-					}
-					// Remove client and close its message channel
-					delete(h.Rooms[cl.RoomID].Clients, cl.ID)
+			if room, ok := h.Rooms[cl.RoomID]; ok {
+				if _, ok := room.Clients[cl.ID]; ok {
+					delete(room.Clients, cl.ID)
 					close(cl.Message)
+					h.Broadcast <- &Message{
+						Content:  fmt.Sprintf("%s has left the room", cl.Username),
+						RoomID:   cl.RoomID,
+						Username: cl.Username,
+					}
 				}
 			}
 
 		case m := <-h.Broadcast:
 			// Handle broadcasting a message to all clients in a room
-			if _, ok := h.Rooms[m.RoomID]; ok {
-				for _, cl := range h.Rooms[m.RoomID].Clients {
-					cl.Message <- m
+			if room, ok := h.Rooms[m.RoomID]; ok {
+				for _, cl := range room.Clients {
+					select {
+					case cl.Message <- m:
+					default:
+						close(cl.Message)
+						delete(room.Clients, cl.ID)
+					}
 				}
 			}
 		}

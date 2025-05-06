@@ -9,6 +9,44 @@ import (
 	"context"
 )
 
+const createChat = `-- name: CreateChat :one
+INSERT INTO chats (room_id, sender_id, message)
+VALUES ($1, $2, $3)
+RETURNING id, room_id, sender_id, message, created_at
+`
+
+type CreateChatParams struct {
+	RoomID   int32
+	SenderID int32
+	Message  string
+}
+
+func (q *Queries) CreateChat(ctx context.Context, arg CreateChatParams) (Chat, error) {
+	row := q.db.QueryRowContext(ctx, createChat, arg.RoomID, arg.SenderID, arg.Message)
+	var i Chat
+	err := row.Scan(
+		&i.ID,
+		&i.RoomID,
+		&i.SenderID,
+		&i.Message,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const createRoom = `-- name: CreateRoom :one
+INSERT INTO rooms (name)
+VALUES ($1)
+RETURNING id, name, created_at
+`
+
+func (q *Queries) CreateRoom(ctx context.Context, name string) (Room, error) {
+	row := q.db.QueryRowContext(ctx, createRoom, name)
+	var i Room
+	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	return i, err
+}
+
 const createUser = `-- name: CreateUser :one
 INSERT INTO users (name, email, phone, password)
 VALUES ($1, $2, $3, $4)
@@ -43,6 +81,26 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	return i, err
 }
 
+const deleteChat = `-- name: DeleteChat :exec
+DELETE FROM chats
+WHERE id = $1
+`
+
+func (q *Queries) DeleteChat(ctx context.Context, id int32) error {
+	_, err := q.db.ExecContext(ctx, deleteChat, id)
+	return err
+}
+
+const deleteRoom = `-- name: DeleteRoom :exec
+DELETE FROM rooms
+WHERE id = $1
+`
+
+func (q *Queries) DeleteRoom(ctx context.Context, id int32) error {
+	_, err := q.db.ExecContext(ctx, deleteRoom, id)
+	return err
+}
+
 const deleteUser = `-- name: DeleteUser :exec
 DELETE FROM users
 WHERE id = $1
@@ -51,6 +109,111 @@ WHERE id = $1
 func (q *Queries) DeleteUser(ctx context.Context, id int32) error {
 	_, err := q.db.ExecContext(ctx, deleteUser, id)
 	return err
+}
+
+const getChatByID = `-- name: GetChatByID :one
+SELECT id, room_id, sender_id, message, created_at FROM chats
+WHERE id = $1
+`
+
+func (q *Queries) GetChatByID(ctx context.Context, id int32) (Chat, error) {
+	row := q.db.QueryRowContext(ctx, getChatByID, id)
+	var i Chat
+	err := row.Scan(
+		&i.ID,
+		&i.RoomID,
+		&i.SenderID,
+		&i.Message,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getChatsByUserAndRoom = `-- name: GetChatsByUserAndRoom :many
+SELECT id, room_id, sender_id, message, created_at FROM chats
+WHERE sender_id = $1 AND room_id = $2
+ORDER BY created_at
+`
+
+type GetChatsByUserAndRoomParams struct {
+	SenderID int32
+	RoomID   int32
+}
+
+func (q *Queries) GetChatsByUserAndRoom(ctx context.Context, arg GetChatsByUserAndRoomParams) ([]Chat, error) {
+	rows, err := q.db.QueryContext(ctx, getChatsByUserAndRoom, arg.SenderID, arg.RoomID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Chat
+	for rows.Next() {
+		var i Chat
+		if err := rows.Scan(
+			&i.ID,
+			&i.RoomID,
+			&i.SenderID,
+			&i.Message,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getChatsByUserID = `-- name: GetChatsByUserID :many
+SELECT id, room_id, sender_id, message, created_at FROM chats
+WHERE sender_id = $1
+ORDER BY created_at
+`
+
+func (q *Queries) GetChatsByUserID(ctx context.Context, senderID int32) ([]Chat, error) {
+	rows, err := q.db.QueryContext(ctx, getChatsByUserID, senderID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Chat
+	for rows.Next() {
+		var i Chat
+		if err := rows.Scan(
+			&i.ID,
+			&i.RoomID,
+			&i.SenderID,
+			&i.Message,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getRoomByID = `-- name: GetRoomByID :one
+SELECT id, name, created_at FROM rooms
+WHERE id = $1
+`
+
+func (q *Queries) GetRoomByID(ctx context.Context, id int32) (Room, error) {
+	row := q.db.QueryRowContext(ctx, getRoomByID, id)
+	var i Room
+	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	return i, err
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
@@ -135,6 +298,69 @@ func (q *Queries) GetUserByPhone(ctx context.Context, phone string) (User, error
 		&i.UpdatedAt,
 	)
 	return i, err
+}
+
+const listChatsByRoom = `-- name: ListChatsByRoom :many
+SELECT id, room_id, sender_id, message, created_at FROM chats
+WHERE room_id = $1
+ORDER BY created_at
+`
+
+func (q *Queries) ListChatsByRoom(ctx context.Context, roomID int32) ([]Chat, error) {
+	rows, err := q.db.QueryContext(ctx, listChatsByRoom, roomID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Chat
+	for rows.Next() {
+		var i Chat
+		if err := rows.Scan(
+			&i.ID,
+			&i.RoomID,
+			&i.SenderID,
+			&i.Message,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listRooms = `-- name: ListRooms :many
+SELECT id, name, created_at FROM rooms
+ORDER BY id
+`
+
+func (q *Queries) ListRooms(ctx context.Context) ([]Room, error) {
+	rows, err := q.db.QueryContext(ctx, listRooms)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Room
+	for rows.Next() {
+		var i Room
+		if err := rows.Scan(&i.ID, &i.Name, &i.CreatedAt); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listUsers = `-- name: ListUsers :many

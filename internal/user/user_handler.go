@@ -1,6 +1,7 @@
 package user
 
 import (
+	"Chat-Websocket/monitoring"
 	"Chat-Websocket/pkg/authPkg"
 	"Chat-Websocket/pkg/loggerPkg"
 	"encoding/json"
@@ -10,13 +11,13 @@ import (
 	"strconv"
 )
 
-type Handler struct {
+type userHandler struct {
 	userSvc IUserService
 	logger  loggerPkg.ILogger
 }
 
-func NewHandler(s IUserService, logger loggerPkg.ILogger) *Handler {
-	return &Handler{
+func NewHandler(s IUserService, logger loggerPkg.ILogger) IUserHandler {
+	return &userHandler{
 		userSvc: s, logger: logger,
 	}
 }
@@ -32,7 +33,7 @@ func NewHandler(s IUserService, logger loggerPkg.ILogger) *Handler {
 // @Failure      400   {object}  map[string]string         "Invalid Input Data"
 // @Failure      500   {object}  map[string]string         "Internal Server Error"
 // @Router       /api/auth/register [post]
-func (h *Handler) CreateUser(c *gin.Context) {
+func (h *userHandler) CreateUserHandler(c *gin.Context) {
 	var input CreateUserReq
 
 	decoder := json.NewDecoder(c.Request.Body)
@@ -48,6 +49,8 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		return
 	}
 
+	monitoring.CreateCounter.Inc()
+
 	c.JSON(http.StatusCreated, gin.H{"data": res})
 }
 
@@ -59,11 +62,14 @@ func (h *Handler) CreateUser(c *gin.Context) {
 // @Success      200  {object}  map[string]interface{}  "List of users"
 // @Failure      500  {object}  map[string]string       "Internal Server Error"
 // @Router       /api/auth/users [get]
-func (h *Handler) ListUser(c *gin.Context) {
+func (h *userHandler) ListUserHandler(c *gin.Context) {
+
 	users, err := h.userSvc.ListUserService(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
 	}
+	monitoring.GetUsersCounter.Inc()
 
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
@@ -80,7 +86,7 @@ func (h *Handler) ListUser(c *gin.Context) {
 // @Failure      401   {object}  map[string]string         "Unauthorized - Invalid credentials"
 // @Failure      500   {object}  map[string]string         "Internal Server Error"
 // @Router       /api/auth/login [post]
-func (h *Handler) LoginUser(c *gin.Context) {
+func (h *userHandler) LoginUserHandler(c *gin.Context) {
 	var input LoginUserReq
 
 	decoder := json.NewDecoder(c.Request.Body)
@@ -103,6 +109,8 @@ func (h *Handler) LoginUser(c *gin.Context) {
 		return
 	}
 
+	monitoring.LoginCounter.Inc()
+
 	token, err := authPkg.CreateToken(id, res.Email)
 	res.Token = token
 	res.Email = input.Email
@@ -122,7 +130,7 @@ func (h *Handler) LoginUser(c *gin.Context) {
 // @Failure      500   {object}  map[string]string         "Internal Server Error"
 // @Security     BearerAuth
 // @Router       /api/auth/edit [put]
-func (h *Handler) EditUser(c *gin.Context) {
+func (h *userHandler) EditUserHandler(c *gin.Context) {
 	userIDRaw, exists := c.Get("userID")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "userID not found in token"})

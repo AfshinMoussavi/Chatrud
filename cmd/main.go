@@ -5,12 +5,14 @@ import (
 	_ "Chat-Websocket/docs"
 	"Chat-Websocket/internal/router"
 	"Chat-Websocket/internal/user"
+	"Chat-Websocket/monitoring"
 	"Chat-Websocket/pkg/dbPkg"
 	"Chat-Websocket/pkg/loggerPkg"
 	"Chat-Websocket/pkg/redisPkg"
 	"Chat-Websocket/pkg/utils"
 	"Chat-Websocket/pkg/validatorPkg"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
@@ -18,6 +20,10 @@ import (
 
 func main() {
 	r := gin.Default()
+
+	monitoring.InitMetrics()
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	cfgPath := utils.GetConfigPath()
@@ -36,19 +42,27 @@ func main() {
 	}
 	defer dbConn.Close()
 
-	if err := redisPkg.InitRedis(cfg); err != nil {
+	redisClient, err := redisPkg.InitRedis(cfg)
+	if err != nil {
 		logger.Fatal("Redis init error: ", err.Error())
 	}
 
 	validator := validatorPkg.NewValidator()
 
 	userRepo := user.NewRepository(dbConn.Queries)
-	userSvc := user.NewService(userRepo, logger, validator)
+	userSvc := user.NewService(userRepo, logger, validator, redisClient)
 	userHandler := user.NewHandler(userSvc, logger)
 
+	//hub := ws.NewHub()
+	//wsRepo := ws.NewRepository(dbConn.Queries)
+	//wsSvc := ws.NewService(wsRepo)
+	//_ := ws.NewHandler(hub, wsSvc)
+	//go hub.Run()
+
+	userRouter := router.NewRouterImpl(userHandler)
 	api := r.Group("/api")
 
-	router.InitRouter(api, userHandler)
+	router.InitRouter(api, userRouter)
 
 	logger.Info("✅ Redis connected successfully")
 	logger.Info("✅ Database connected successfully")

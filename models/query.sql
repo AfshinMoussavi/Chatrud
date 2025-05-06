@@ -37,3 +37,48 @@ WHERE id = $1;
 -- name: DeleteUser :exec
 DELETE FROM users
 WHERE id = $1;
+
+-- name: CreateRoom :one
+INSERT INTO rooms (name)
+VALUES ($1)
+RETURNING *;
+
+-- name: GetRoomByID :one
+SELECT * FROM rooms
+WHERE id = $1;
+
+-- name: ListRooms :many
+SELECT * FROM rooms
+ORDER BY id;
+
+-- name: DeleteRoom :exec
+DELETE FROM rooms
+WHERE id = $1;
+
+-- name: CreateChat :one
+INSERT INTO chats (room_id, sender_id, message)
+VALUES ($1, $2, $3)
+RETURNING *;
+
+-- name: GetChatByID :one
+SELECT * FROM chats
+WHERE id = $1;
+
+-- name: ListChatsByRoom :many
+SELECT * FROM chats
+WHERE room_id = $1
+ORDER BY created_at;
+
+-- name: DeleteChat :exec
+DELETE FROM chats
+WHERE id = $1;
+
+-- name: GetChatsByUserID :many
+SELECT * FROM chats
+WHERE sender_id = $1
+ORDER BY created_at;
+
+-- name: GetChatsByUserAndRoom :many
+SELECT * FROM chats
+WHERE sender_id = $1 AND room_id = $2
+ORDER BY created_at;

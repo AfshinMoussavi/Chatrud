@@ -19,13 +19,15 @@ type userService struct {
 	logger    loggerPkg.ILogger
 	validator validatorPkg.IValidator
 	timeout   time.Duration
+	redis     redisPkg.IRedis
 }
 
-func NewService(repository IUserRepository, logger loggerPkg.ILogger, validator validatorPkg.IValidator) IUserService {
+func NewService(repository IUserRepository, logger loggerPkg.ILogger, validator validatorPkg.IValidator, redis redisPkg.IRedis) IUserService {
 	return &userService{
 		userRepo:  repository,
 		logger:    logger,
 		validator: validator,
+		redis:     redis,
 		timeout:   time.Duration(2) * time.Second,
 	}
 }
@@ -69,10 +71,7 @@ func (s *userService) CreateUserService(ctx context.Context, req *CreateUserReq)
 		return &CreateUserRes{}, fmt.Errorf("create user repository failed: %v", err)
 	}
 
-	/*
-		Clear the cache
-	*/
-	err = redisPkg.Rdb.Del(ctx, "users:list").Err()
+	err = s.redis.Del(ctx, "users:list").Err()
 	if err != nil {
 		s.logger.Warn("Failed to delete old cache: %v", err)
 	}
@@ -93,10 +92,8 @@ func (s *userService) ListUserService(ctx context.Context) (*[]CreateUserRes, er
 
 	const redisKey = "users:list"
 
-	/*
-		Step 1: Try fetching from redis
-	*/
-	cached, err := redisPkg.Rdb.Get(ctx, redisKey).Result()
+	// Step 1: Try fetching from redis
+	cached, err := s.redis.Get(ctx, redisKey).Result()
 	if err == nil {
 		var cachedUsers []CreateUserRes
 		if err := json.Unmarshal([]byte(cached), &cachedUsers); err == nil {
@@ -105,9 +102,7 @@ func (s *userService) ListUserService(ctx context.Context) (*[]CreateUserRes, er
 		}
 	}
 
-	/*
-		Step 2: Fetch from database
-	*/
+	// Step 2: Fetch from database
 	dbUsers, err := s.userRepo.ListUserRepository(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("list user repository failed: %v", err)
@@ -123,15 +118,12 @@ func (s *userService) ListUserService(ctx context.Context) (*[]CreateUserRes, er
 		})
 	}
 
-	/*
-		Step 3: Save to Redis
-	*/
+	// Step 3: Save to Redis
 	data, err := json.Marshal(users)
 	if err != nil {
 		s.logger.Warn("Failed to marshal users for redis: %v", err)
 	} else {
-		err = redisPkg.Rdb.Set(ctx, redisKey, string(data), s.timeout).Err()
-		err = redisPkg.Rdb.Set(ctx, redisKey, string(data), 10*time.Minute).Err()
+		err = s.redis.Set(ctx, redisKey, string(data), 10*time.Minute).Err()
 		if err != nil {
 			s.logger.Warn("Failed to save users in redis: %v", err)
 		}
