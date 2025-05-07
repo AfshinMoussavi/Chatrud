@@ -37,6 +37,9 @@ swagger:
 mockery:
 	mockery
 
-.PHONY: postgresinit postgres createdb dropdb migrateup migratedown redisinit rediscli redislog stopredis stoppostgres swagger mockery
+tree:
+	tree /F /A
+
+.PHONY: postgresinit postgres createdb dropdb migrateup migratedown redisinit rediscli redislog stopredis stoppostgres swagger mockery tree
 
 

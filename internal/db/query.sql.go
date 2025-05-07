@@ -129,6 +129,41 @@ func (q *Queries) GetChatByID(ctx context.Context, id int32) (Chat, error) {
 	return i, err
 }
 
+const getChatsByRoom = `-- name: GetChatsByRoom :many
+SELECT id, room_id, sender_id, message, created_at FROM chats
+WHERE room_id = $1
+ORDER BY created_at
+`
+
+func (q *Queries) GetChatsByRoom(ctx context.Context, roomID int32) ([]Chat, error) {
+	rows, err := q.db.QueryContext(ctx, getChatsByRoom, roomID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Chat
+	for rows.Next() {
+		var i Chat
+		if err := rows.Scan(
+			&i.ID,
+			&i.RoomID,
+			&i.SenderID,
+			&i.Message,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getChatsByUserAndRoom = `-- name: GetChatsByUserAndRoom :many
 SELECT id, room_id, sender_id, message, created_at FROM chats
 WHERE sender_id = $1 AND room_id = $2
@@ -216,6 +251,18 @@ func (q *Queries) GetRoomByID(ctx context.Context, id int32) (Room, error) {
 	return i, err
 }
 
+const getRoomByName = `-- name: GetRoomByName :one
+SELECT id, name, created_at FROM rooms
+WHERE name = $1
+`
+
+func (q *Queries) GetRoomByName(ctx context.Context, name string) (Room, error) {
+	row := q.db.QueryRowContext(ctx, getRoomByName, name)
+	var i Room
+	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	return i, err
+}
+
 const getUserByEmail = `-- name: GetUserByEmail :one
 SELECT id, name, email, phone, password, active, created_at, updated_at FROM users
 WHERE email = $1
@@ -298,41 +345,6 @@ func (q *Queries) GetUserByPhone(ctx context.Context, phone string) (User, error
 		&i.UpdatedAt,
 	)
 	return i, err
-}
-
-const listChatsByRoom = `-- name: ListChatsByRoom :many
-SELECT id, room_id, sender_id, message, created_at FROM chats
-WHERE room_id = $1
-ORDER BY created_at
-`
-
-func (q *Queries) ListChatsByRoom(ctx context.Context, roomID int32) ([]Chat, error) {
-	rows, err := q.db.QueryContext(ctx, listChatsByRoom, roomID)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []Chat
-	for rows.Next() {
-		var i Chat
-		if err := rows.Scan(
-			&i.ID,
-			&i.RoomID,
-			&i.SenderID,
-			&i.Message,
-			&i.CreatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
 }
 
 const listRooms = `-- name: ListRooms :many

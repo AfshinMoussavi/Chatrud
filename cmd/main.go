@@ -5,6 +5,7 @@ import (
 	_ "Chat-Websocket/docs"
 	"Chat-Websocket/internal/router"
 	"Chat-Websocket/internal/user"
+	"Chat-Websocket/internal/ws"
 	"Chat-Websocket/monitoring"
 	"Chat-Websocket/pkg/dbPkg"
 	"Chat-Websocket/pkg/loggerPkg"
@@ -53,13 +54,11 @@ func main() {
 	userSvc := user.NewService(userRepo, logger, validator, redisClient)
 	userHandler := user.NewHandler(userSvc, logger)
 
-	//hub := ws.NewHub()
-	//wsRepo := ws.NewRepository(dbConn.Queries)
-	//wsSvc := ws.NewService(wsRepo)
-	//_ := ws.NewHandler(hub, wsSvc)
-	//go hub.Run()
+	chatRepo := ws.NewRepository(dbConn.Queries)
+	chatSvc := ws.NewService(chatRepo, logger)
+	chatHandler := ws.NewHandler(chatSvc, logger)
 
-	userRouter := router.NewRouterImpl(userHandler)
+	userRouter := router.NewRouterImpl(userHandler, chatHandler)
 	api := r.Group("/api")
 
 	router.InitRouter(api, userRouter)

@@ -18,8 +18,17 @@ var (
 			Name: "app_get_users_total",
 			Help: "Total number of requests to GET /users",
 		})
+
+	RequestDuration = prometheus.NewHistogramVec(
+		prometheus.HistogramOpts{
+			Name:    "app_request_duration_seconds",
+			Help:    "Duration of HTTP requests in seconds",
+			Buckets: prometheus.DefBuckets,
+		},
+		[]string{"method", "path"},
+	)
 )
 
 func InitMetrics() {
-	prometheus.MustRegister(LoginCounter, CreateCounter, GetUsersCounter)
+	prometheus.MustRegister(LoginCounter, CreateCounter, GetUsersCounter, RequestDuration)
 }

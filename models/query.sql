@@ -40,12 +40,16 @@ WHERE id = $1;
 
 -- name: CreateRoom :one
 INSERT INTO rooms (name)
-VALUES ($1)
+VALUES (sqlc.arg(name))
 RETURNING *;
 
 -- name: GetRoomByID :one
 SELECT * FROM rooms
 WHERE id = $1;
+
+-- name: GetRoomByName :one
+SELECT * FROM rooms
+WHERE name = $1;
 
 -- name: ListRooms :many
 SELECT * FROM rooms
@@ -64,7 +68,7 @@ RETURNING *;
 SELECT * FROM chats
 WHERE id = $1;
 
--- name: ListChatsByRoom :many
+-- name: GetChatsByRoom :many
 SELECT * FROM chats
 WHERE room_id = $1
 ORDER BY created_at;

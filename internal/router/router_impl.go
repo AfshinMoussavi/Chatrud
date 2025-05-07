@@ -3,16 +3,19 @@ package router
 import (
 	"Chat-Websocket/internal/middleware"
 	"Chat-Websocket/internal/user"
+	"Chat-Websocket/internal/ws"
 	"github.com/gin-gonic/gin"
 )
 
 type routerImpl struct {
 	userHandler user.IUserHandler
+	chatHandler ws.IWsHandler
 }
 
-func NewRouterImpl(userHandler user.IUserHandler) IRouter {
+func NewRouterImpl(userHandler user.IUserHandler, wsHandler ws.IWsHandler) IRouter {
 	return &routerImpl{
 		userHandler: userHandler,
+		chatHandler: wsHandler,
 	}
 }
 
@@ -23,20 +26,14 @@ func (r *routerImpl) SetupRoutes(router *gin.RouterGroup) {
 		auth.GET("/users", r.userHandler.ListUserHandler)
 		auth.POST("/login", r.userHandler.LoginUserHandler)
 	}
+	auth.GET("/ws", r.chatHandler.HandleWebSocket)
 
 	authorized := auth.Group("/")
 	authorized.Use(middleware.AuthMiddleware())
 	{
+
 		authorized.PUT("/edit", r.userHandler.EditUserHandler)
 	}
-
-	//chat := router.Group("/chat")
-	//{
-	//	chat.POST("/ws/createRoom", wsHandler.CreateRoom)
-	//	chat.GET("/ws/joinRoom/:roomId", wsHandler.JoinRoom)
-	//	chat.GET("/ws/getRooms", wsHandler.GetRooms)
-	//	chat.GET("/ws/getClients/:roomId", wsHandler.GetClients)
-	//}
 }
 
 func InitRouter(router *gin.RouterGroup, userRouter IRouter) {

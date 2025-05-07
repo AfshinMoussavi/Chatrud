@@ -56,6 +56,18 @@ services:
     depends_on:
       - app
 
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - mynetwork
+    volumes:
+      - ./pkg/monitorPkg/grafana/provisioning:/etc/grafana/provisioning
+
   migrate:
     image: migrate/migrate
 #    command: -path /migrations -database "postgres://postgres:1234@postgres_container:5432/chat_db?sslmode=disable" up

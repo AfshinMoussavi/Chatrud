@@ -34,9 +34,16 @@ packages:
       filename: '{{ .InterfaceName | trimPrefix "I" | camelcase }}_mock.go'
       structname: Mock{{ .InterfaceName | trimPrefix "I" }}
 
+#  ./internal/db:
+#    config:
+#      all: true
+#      dir: ./tests/unit/mocks/db
+#      filename: '{{ .InterfaceName | trimPrefix "I" | camelcase }}_mock.go'
+#      structname: Mock{{ .InterfaceName | trimPrefix "I" }}
+
   ./internal/db:
     config:
       all: true
       dir: ./tests/unit/mocks/db
-      filename: '{{ .InterfaceName | trimPrefix "I" | camelcase }}_mock.go'
-      structname: Mock{{ .InterfaceName | trimPrefix "I" }}
+      filename: '{{ .InterfaceName | camelcase }}_mock.go'
+      structname: Mock{{ .InterfaceName }}

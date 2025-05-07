@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE  rooms (
     id SERIAL PRIMARY KEY ,
-    name varchar(100) NOT NULL ,
+    name varchar(100) NOT NULL unique ,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

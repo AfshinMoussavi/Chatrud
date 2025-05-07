@@ -25,3 +25,64 @@
 {"level":"info","ts":"2025-05-06T11:02:54.180+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from redis]"}
 {"level":"info","ts":"2025-05-06T11:02:55.048+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from redis]"}
 {"level":"info","ts":"2025-05-06T11:02:56.118+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [data load from redis]"}
+{"level":"info","ts":"2025-05-06T12:03:53.228+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T12:03:53.229+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T13:31:58.064+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T13:31:58.066+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"fatal","ts":"2025-05-06T13:31:58.067+0330","caller":"loggerPkg/logger_impl.go:132","msg":"💀 [listen tcp :8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.]"}
+{"level":"info","ts":"2025-05-06T13:32:27.415+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T13:32:27.416+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"fatal","ts":"2025-05-06T13:32:27.417+0330","caller":"loggerPkg/logger_impl.go:132","msg":"💀 [listen tcp :8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.]"}
+{"level":"info","ts":"2025-05-06T15:03:21.249+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:03:21.252+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:14:29.010+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:14:29.010+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:15:07.064+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:15:07.064+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:20:14.191+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:20:14.191+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:56:03.711+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T15:56:03.711+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-06T16:01:04.932+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-06T16:01:04.933+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:47:42.182+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:47:42.183+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:49:56.405+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:49:56.405+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:50:53.378+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:50:53.378+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:56:59.116+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:56:59.116+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:58:24.627+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T08:58:24.627+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:00:17.598+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:00:17.599+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:05:08.622+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:05:08.622+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:14:12.337+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:14:12.337+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:27:08.450+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T09:27:08.451+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T14:27:36.269+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T14:27:36.269+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"error","ts":"2025-05-07T14:29:02.474+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [No room specified in query]"}
+{"level":"info","ts":"2025-05-07T14:32:00.000+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T14:32:00.001+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T14:49:27.003+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T14:49:27.004+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:55:39.787+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:55:39.788+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:56:32.294+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:56:32.295+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:58:40.296+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T17:58:40.297+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"error","ts":"2025-05-07T18:02:22.335+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [No room specified in query]"}
+{"level":"error","ts":"2025-05-07T18:02:41.603+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [Error reading initial message in room %s: %v one invalid character 'h' in literal true (expecting 'r')]"}
+{"level":"info","ts":"2025-05-07T18:05:31.592+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T18:05:31.592+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"info","ts":"2025-05-07T19:02:51.026+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Redis connected successfully]"}
+{"level":"info","ts":"2025-05-07T19:02:51.027+0330","caller":"loggerPkg/logger_impl.go:112","msg":"ℹ️ [✅ Database connected successfully]"}
+{"level":"error","ts":"2025-05-07T19:04:49.144+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [Initial username does not match token username]"}
+{"level":"error","ts":"2025-05-07T19:05:08.129+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [Error saving join message in room %s: %v one sql: no rows in result set]"}
+{"level":"error","ts":"2025-05-07T19:06:25.138+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [Initial username does not match token username]"}
+{"level":"error","ts":"2025-05-07T19:06:36.865+0330","caller":"loggerPkg/logger_impl.go:120","msg":"❌ [Error saving join message in room %s: %v one sql: no rows in result set]"}
