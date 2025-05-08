@@ -199,3 +199,11 @@ func (s *userService) UpdateUserService(ctx context.Context, req *EditUserReq) (
 
 	return res, nil
 }
+
+func (s *userService) DeleteUserService(ctx context.Context, id int32) error {
+	err := s.userRepo.DeleteUserRepository(ctx, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -70,6 +70,40 @@ func (_c *MockUserHandler_CreateUserHandler_Call) RunAndReturn(run func(c *gin.C
 	return _c
 }
 
+// DeleteUserHandler provides a mock function for the type MockUserHandler
+func (_mock *MockUserHandler) DeleteUserHandler(c *gin.Context) {
+	_mock.Called(c)
+	return
+}
+
+// MockUserHandler_DeleteUserHandler_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteUserHandler'
+type MockUserHandler_DeleteUserHandler_Call struct {
+	*mock.Call
+}
+
+// DeleteUserHandler is a helper method to define mock.On call
+//   - c
+func (_e *MockUserHandler_Expecter) DeleteUserHandler(c interface{}) *MockUserHandler_DeleteUserHandler_Call {
+	return &MockUserHandler_DeleteUserHandler_Call{Call: _e.mock.On("DeleteUserHandler", c)}
+}
+
+func (_c *MockUserHandler_DeleteUserHandler_Call) Run(run func(c *gin.Context)) *MockUserHandler_DeleteUserHandler_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(*gin.Context))
+	})
+	return _c
+}
+
+func (_c *MockUserHandler_DeleteUserHandler_Call) Return() *MockUserHandler_DeleteUserHandler_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *MockUserHandler_DeleteUserHandler_Call) RunAndReturn(run func(c *gin.Context)) *MockUserHandler_DeleteUserHandler_Call {
+	_c.Run(run)
+	return _c
+}
+
 // EditUserHandler provides a mock function for the type MockUserHandler
 func (_mock *MockUserHandler) EditUserHandler(c *gin.Context) {
 	_mock.Called(c)

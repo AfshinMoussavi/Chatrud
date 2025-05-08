@@ -93,6 +93,52 @@ func (_c *MockUserRepository_CreateUserRepository_Call) RunAndReturn(run func(ct
 	return _c
 }
 
+// DeleteUserRepository provides a mock function for the type MockUserRepository
+func (_mock *MockUserRepository) DeleteUserRepository(ctx context.Context, id int32) error {
+	ret := _mock.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteUserRepository")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) error); ok {
+		r0 = returnFunc(ctx, id)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockUserRepository_DeleteUserRepository_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteUserRepository'
+type MockUserRepository_DeleteUserRepository_Call struct {
+	*mock.Call
+}
+
+// DeleteUserRepository is a helper method to define mock.On call
+//   - ctx
+//   - id
+func (_e *MockUserRepository_Expecter) DeleteUserRepository(ctx interface{}, id interface{}) *MockUserRepository_DeleteUserRepository_Call {
+	return &MockUserRepository_DeleteUserRepository_Call{Call: _e.mock.On("DeleteUserRepository", ctx, id)}
+}
+
+func (_c *MockUserRepository_DeleteUserRepository_Call) Run(run func(ctx context.Context, id int32)) *MockUserRepository_DeleteUserRepository_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(int32))
+	})
+	return _c
+}
+
+func (_c *MockUserRepository_DeleteUserRepository_Call) Return(err error) *MockUserRepository_DeleteUserRepository_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockUserRepository_DeleteUserRepository_Call) RunAndReturn(run func(ctx context.Context, id int32) error) *MockUserRepository_DeleteUserRepository_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetUserByEmailRepository provides a mock function for the type MockUserRepository
 func (_mock *MockUserRepository) GetUserByEmailRepository(ctx context.Context, email string) (db.User, error) {
 	ret := _mock.Called(ctx, email)

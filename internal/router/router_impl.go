@@ -33,6 +33,7 @@ func (r *routerImpl) SetupRoutes(router *gin.RouterGroup) {
 	{
 
 		authorized.PUT("/edit", r.userHandler.EditUserHandler)
+		authorized.DELETE("/delete", r.userHandler.DeleteUserHandler)
 	}
 }
 

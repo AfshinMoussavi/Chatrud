@@ -396,6 +396,63 @@ func (_c *MockQuerier_GetChatByID_Call) RunAndReturn(run func(ctx context.Contex
 	return _c
 }
 
+// GetChatsByRoom provides a mock function for the type MockQuerier
+func (_mock *MockQuerier) GetChatsByRoom(ctx context.Context, roomID int32) ([]db.Chat, error) {
+	ret := _mock.Called(ctx, roomID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetChatsByRoom")
+	}
+
+	var r0 []db.Chat
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) ([]db.Chat, error)); ok {
+		return returnFunc(ctx, roomID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) []db.Chat); ok {
+		r0 = returnFunc(ctx, roomID)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]db.Chat)
+		}
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, int32) error); ok {
+		r1 = returnFunc(ctx, roomID)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockQuerier_GetChatsByRoom_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetChatsByRoom'
+type MockQuerier_GetChatsByRoom_Call struct {
+	*mock.Call
+}
+
+// GetChatsByRoom is a helper method to define mock.On call
+//   - ctx
+//   - roomID
+func (_e *MockQuerier_Expecter) GetChatsByRoom(ctx interface{}, roomID interface{}) *MockQuerier_GetChatsByRoom_Call {
+	return &MockQuerier_GetChatsByRoom_Call{Call: _e.mock.On("GetChatsByRoom", ctx, roomID)}
+}
+
+func (_c *MockQuerier_GetChatsByRoom_Call) Run(run func(ctx context.Context, roomID int32)) *MockQuerier_GetChatsByRoom_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(int32))
+	})
+	return _c
+}
+
+func (_c *MockQuerier_GetChatsByRoom_Call) Return(chats []db.Chat, err error) *MockQuerier_GetChatsByRoom_Call {
+	_c.Call.Return(chats, err)
+	return _c
+}
+
+func (_c *MockQuerier_GetChatsByRoom_Call) RunAndReturn(run func(ctx context.Context, roomID int32) ([]db.Chat, error)) *MockQuerier_GetChatsByRoom_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetChatsByUserAndRoom provides a mock function for the type MockQuerier
 func (_mock *MockQuerier) GetChatsByUserAndRoom(ctx context.Context, arg db.GetChatsByUserAndRoomParams) ([]db.Chat, error) {
 	ret := _mock.Called(ctx, arg)
@@ -561,6 +618,61 @@ func (_c *MockQuerier_GetRoomByID_Call) Return(room db.Room, err error) *MockQue
 }
 
 func (_c *MockQuerier_GetRoomByID_Call) RunAndReturn(run func(ctx context.Context, id int32) (db.Room, error)) *MockQuerier_GetRoomByID_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetRoomByName provides a mock function for the type MockQuerier
+func (_mock *MockQuerier) GetRoomByName(ctx context.Context, name string) (db.Room, error) {
+	ret := _mock.Called(ctx, name)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetRoomByName")
+	}
+
+	var r0 db.Room
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (db.Room, error)); ok {
+		return returnFunc(ctx, name)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) db.Room); ok {
+		r0 = returnFunc(ctx, name)
+	} else {
+		r0 = ret.Get(0).(db.Room)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = returnFunc(ctx, name)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockQuerier_GetRoomByName_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetRoomByName'
+type MockQuerier_GetRoomByName_Call struct {
+	*mock.Call
+}
+
+// GetRoomByName is a helper method to define mock.On call
+//   - ctx
+//   - name
+func (_e *MockQuerier_Expecter) GetRoomByName(ctx interface{}, name interface{}) *MockQuerier_GetRoomByName_Call {
+	return &MockQuerier_GetRoomByName_Call{Call: _e.mock.On("GetRoomByName", ctx, name)}
+}
+
+func (_c *MockQuerier_GetRoomByName_Call) Run(run func(ctx context.Context, name string)) *MockQuerier_GetRoomByName_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(string))
+	})
+	return _c
+}
+
+func (_c *MockQuerier_GetRoomByName_Call) Return(room db.Room, err error) *MockQuerier_GetRoomByName_Call {
+	_c.Call.Return(room, err)
+	return _c
+}
+
+func (_c *MockQuerier_GetRoomByName_Call) RunAndReturn(run func(ctx context.Context, name string) (db.Room, error)) *MockQuerier_GetRoomByName_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -781,63 +893,6 @@ func (_c *MockQuerier_GetUserByPhone_Call) Return(user db.User, err error) *Mock
 }
 
 func (_c *MockQuerier_GetUserByPhone_Call) RunAndReturn(run func(ctx context.Context, phone string) (db.User, error)) *MockQuerier_GetUserByPhone_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
-// ListChatsByRoom provides a mock function for the type MockQuerier
-func (_mock *MockQuerier) ListChatsByRoom(ctx context.Context, roomID int32) ([]db.Chat, error) {
-	ret := _mock.Called(ctx, roomID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for ListChatsByRoom")
-	}
-
-	var r0 []db.Chat
-	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) ([]db.Chat, error)); ok {
-		return returnFunc(ctx, roomID)
-	}
-	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) []db.Chat); ok {
-		r0 = returnFunc(ctx, roomID)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]db.Chat)
-		}
-	}
-	if returnFunc, ok := ret.Get(1).(func(context.Context, int32) error); ok {
-		r1 = returnFunc(ctx, roomID)
-	} else {
-		r1 = ret.Error(1)
-	}
-	return r0, r1
-}
-
-// MockQuerier_ListChatsByRoom_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListChatsByRoom'
-type MockQuerier_ListChatsByRoom_Call struct {
-	*mock.Call
-}
-
-// ListChatsByRoom is a helper method to define mock.On call
-//   - ctx
-//   - roomID
-func (_e *MockQuerier_Expecter) ListChatsByRoom(ctx interface{}, roomID interface{}) *MockQuerier_ListChatsByRoom_Call {
-	return &MockQuerier_ListChatsByRoom_Call{Call: _e.mock.On("ListChatsByRoom", ctx, roomID)}
-}
-
-func (_c *MockQuerier_ListChatsByRoom_Call) Run(run func(ctx context.Context, roomID int32)) *MockQuerier_ListChatsByRoom_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(int32))
-	})
-	return _c
-}
-
-func (_c *MockQuerier_ListChatsByRoom_Call) Return(chats []db.Chat, err error) *MockQuerier_ListChatsByRoom_Call {
-	_c.Call.Return(chats, err)
-	return _c
-}
-
-func (_c *MockQuerier_ListChatsByRoom_Call) RunAndReturn(run func(ctx context.Context, roomID int32) ([]db.Chat, error)) *MockQuerier_ListChatsByRoom_Call {
 	_c.Call.Return(run)
 	return _c
 }

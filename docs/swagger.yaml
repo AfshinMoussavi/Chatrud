@@ -38,6 +38,35 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/auth/delete:
+    delete:
+      description: Delete the account of the logged-in user
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: User deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized - Invalid user
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete user
+      tags:
+      - auth
   /api/auth/edit:
     put:
       consumes:

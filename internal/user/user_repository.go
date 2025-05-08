@@ -4,6 +4,7 @@ import (
 	"Chat-Websocket/internal/db"
 	"context"
 	"errors"
+	"fmt"
 )
 
 type userRepository struct {
@@ -74,4 +75,13 @@ func (u *userRepository) GetUserByIdRepository(ctx context.Context, id int32) (d
 		return db.User{}, errors.New("user get by id failed")
 	}
 	return user, nil
+}
+
+func (u *userRepository) DeleteUserRepository(ctx context.Context, id int32) error {
+	err := u.queries.DeleteUser(ctx, id)
+	fmt.Println("err is", err)
+	if err != nil {
+		return err
+	}
+	return nil
 }

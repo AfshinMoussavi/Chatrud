@@ -95,6 +95,52 @@ func (_c *MockUserService_CreateUserService_Call) RunAndReturn(run func(ctx cont
 	return _c
 }
 
+// DeleteUserService provides a mock function for the type MockUserService
+func (_mock *MockUserService) DeleteUserService(ctx context.Context, id int32) error {
+	ret := _mock.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteUserService")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, int32) error); ok {
+		r0 = returnFunc(ctx, id)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockUserService_DeleteUserService_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteUserService'
+type MockUserService_DeleteUserService_Call struct {
+	*mock.Call
+}
+
+// DeleteUserService is a helper method to define mock.On call
+//   - ctx
+//   - id
+func (_e *MockUserService_Expecter) DeleteUserService(ctx interface{}, id interface{}) *MockUserService_DeleteUserService_Call {
+	return &MockUserService_DeleteUserService_Call{Call: _e.mock.On("DeleteUserService", ctx, id)}
+}
+
+func (_c *MockUserService_DeleteUserService_Call) Run(run func(ctx context.Context, id int32)) *MockUserService_DeleteUserService_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(int32))
+	})
+	return _c
+}
+
+func (_c *MockUserService_DeleteUserService_Call) Return(err error) *MockUserService_DeleteUserService_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockUserService_DeleteUserService_Call) RunAndReturn(run func(ctx context.Context, id int32) error) *MockUserService_DeleteUserService_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ListUserService provides a mock function for the type MockUserService
 func (_mock *MockUserService) ListUserService(ctx context.Context) (*[]user.CreateUserRes, error) {
 	ret := _mock.Called(ctx)

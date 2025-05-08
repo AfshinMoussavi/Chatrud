@@ -14,6 +14,7 @@ type IUserRepository interface {
 	GetUserByNameRepository(ctx context.Context, name string) (db.User, error)
 	GetUserByIdRepository(ctx context.Context, id int32) (db.User, error)
 	UpdateUserRepository(ctx context.Context, user db.UpdateUserParams) (db.User, error)
+	DeleteUserRepository(ctx context.Context, id int32) error
 }
 
 type IUserService interface {
@@ -21,6 +22,7 @@ type IUserService interface {
 	ListUserService(ctx context.Context) (*[]CreateUserRes, error)
 	LoginUserService(ctx context.Context, req *LoginUserReq) (*LoginUserRes, error)
 	UpdateUserService(ctx context.Context, req *EditUserReq) (*EditUserRes, error)
+	DeleteUserService(ctx context.Context, id int32) error
 }
 
 type IUserHandler interface {
@@ -28,6 +30,7 @@ type IUserHandler interface {
 	ListUserHandler(c *gin.Context)
 	LoginUserHandler(c *gin.Context)
 	EditUserHandler(c *gin.Context)
+	DeleteUserHandler(c *gin.Context)
 }
 
 type CreateUserReq struct {

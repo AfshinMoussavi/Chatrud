@@ -26,7 +26,7 @@ func NewRepository(queries *db.Queries) IWsRepository {
 		conns:       make(map[*websocket.Conn]struct{ username, room string }),
 		usernames:   make(map[string]*websocket.Conn),
 		rateLimits:  make(map[*websocket.Conn][]time.Time),
-		maxMessages: 10,              // Max 10 messages for rate limiting
+		maxMessages: 3,               // Max 10 messages for rate limiting
 		windowSize:  5 * time.Second, // In 5 seconds
 	}
 }
@@ -65,6 +65,7 @@ func (w *wsRepository) RemoveClient(room, username string, conn *websocket.Conn)
 	return nil
 }
 
+// Exept sender
 func (w *wsRepository) BroadcastMessage(msg Message, sender *websocket.Conn) error {
 	w.mutex.RLock()
 	defer w.mutex.RUnlock()

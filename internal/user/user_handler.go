@@ -158,6 +158,39 @@ func (h *userHandler) EditUserHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to update user: %s", err)})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": updatedUser})
+}
+
+// DeleteUser godoc
+// @Summary      Delete user
+// @Description  Delete the account of the logged-in user
+// @Tags         auth
+// @Produce      json
+// @Success      204  {object}  map[string]string  "User deleted successfully"
+// @Failure      401  {object}  map[string]string  "Unauthorized - Invalid user"
+// @Failure      500  {object}  map[string]string  "Internal Server Error"
+// @Security     BearerAuth
+// @Router       /api/auth/delete [delete]
+func (h *userHandler) DeleteUserHandler(c *gin.Context) {
+	userIDRaw, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "userID not found in token"})
+		return
+	}
+
+	userID, ok := userIDRaw.(int64)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid userID format"})
+		return
+	}
+	userIDInt32 := int32(userID)
+
+	err := h.userSvc.DeleteUserService(c.Request.Context(), userIDInt32)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
+		return
+	}
+
+	c.JSON(http.StatusNoContent, gin.H{"message": "Successfully deleted user"})
+
 }
