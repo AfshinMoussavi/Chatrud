@@ -33,14 +33,22 @@ jobs:
       - name: Build
         run: go build -o main ./cmd
 
+      # نصب k6
       - name: Install k6
         run: |
+          # نصب dirmngr
+          sudo apt-get install -y dirmngr
+
+          # اضافه کردن کلید GPG
           sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
 
+          # افزودن مخزن k6 به لیست منابع
           echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
 
+          # بروزرسانی لیست بسته‌ها و نصب k6
           sudo apt-get update
           sudo apt-get install -y k6
 
+      # اجرای تست‌های k6
       - name: Run k6 load test
         run: k6 run tests/load/load_test_create.js
