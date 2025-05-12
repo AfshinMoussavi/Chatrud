@@ -1,0 +1,185 @@
+Parent directory: C:\Users\Afshin\Desktop\Codes\docs\The Project
+
+Folder PATH listing
+Volume serial number is 9E87-EF01
+C:.
+|   .mockery.yml
+|   docker-compose.yml
+|   Dockerfile
+|   go.mod
+|   go.sum
+|   index.html
+|   main
+|   Makefile
+|   README.md
+|   sqlc.yaml
+|   
++---.github
+|   \---workflows
+|           go.yml
+|           
++---.idea
+|   |   .gitignore
+|   |   dataSources.local.xml
+|   |   dataSources.xml
+|   |   material_theme_project_new.xml
+|   |   misc.xml
+|   |   modules.xml
+|   |   The Project.iml
+|   |   vcs.xml
+|   |   workspace.xml
+|   |   
+|   \---dataSources
+|       |   5ffeb62a-6472-43e1-935d-9656782d0401.corrupted.20250505-043541.reason.txt
+|       |   5ffeb62a-6472-43e1-935d-9656782d0401.corrupted.20250505-043541.xml
+|       |   6ae6cc23-5dec-4dd6-8990-22c1519f70cd.corrupted.20250505-043541.reason.txt
+|       |   6ae6cc23-5dec-4dd6-8990-22c1519f70cd.corrupted.20250505-043541.xml
+|       |   6ae6cc23-5dec-4dd6-8990-22c1519f70cd.xml
+|       |   c26d8729-5213-49c0-b9dd-ea27332bec49.xml
+|       |   
+|       +---6ae6cc23-5dec-4dd6-8990-22c1519f70cd
+|       |   \---storage_v2
+|       |       \---_src_
+|       |           \---database
+|       |               |   chat_db.xf4NLA.meta
+|       |               |   
+|       |               \---chat_db.xf4NLA
+|       |                   \---schema
+|       |                           public.abK9xQ.meta
+|       |                           
+|       \---c26d8729-5213-49c0-b9dd-ea27332bec49
+|           \---storage_v2
+|               \---_src_
+|                   \---database
+|                       |   chat_db.xf4NLA.meta
+|                       |   
+|                       \---chat_db.xf4NLA
+|                           \---schema
+|                                   public.abK9xQ.meta
+|                                   
++---cmd
+|       main.go
+|       
++---config
+|       config-docker.yml
+|       config-local.yml
+|       config.go
+|       
++---docs
+|       docs.go
+|       swagger.json
+|       swagger.yaml
+|       
++---internal
+|   +---db
+|   |       db.go
+|   |       models.go
+|   |       querier.go
+|   |       query.sql.go
+|   |       
+|   +---middleware
+|   |       auth_middleware.go
+|   |       
+|   +---router
+|   |       router.go
+|   |       router_impl.go
+|   |       
+|   +---user
+|   |       user.go
+|   |       user_handler.go
+|   |       user_repository.go
+|   |       user_service.go
+|   |       
+|   \---ws
+|           ws.go
+|           ws_handler.go
+|           ws_repository.go
+|           ws_service.go
+|           
++---logs
+|       application.log
+|       
++---models
+|   |   query.sql
+|   |   schema.sql
+|   |   
+|   \---migrations
+|           01_add_users_table.down.sql
+|           01_add_users_table.up.sql
+|           02_add_rooms_table.down.sql
+|           02_add_rooms_table.up.sql
+|           03_add_chats_table.down.sql
+|           03_add_chats_table.up.sql
+|           
++---monitoring
+|       metrics.go
+|       
++---pkg
+|   +---authPkg
+|   |       jwt.go
+|   |       
+|   +---dbPkg
+|   |       db.go
+|   |       
+|   +---loggerPkg
+|   |       logger.go
+|   |       logger_impl.go
+|   |       
+|   +---monitorPkg
+|   |   |   prometheus.yml
+|   |   |   
+|   |   +---alert.rules.yml
+|   |   +---datasources
+|   |   |       datasource.yml
+|   |   |       
+|   |   \---grafana
+|   |       \---provisioning
+|   +---redisPkg
+|   |       redis.go
+|   |       redis_impl.go
+|   |       
+|   +---utils
+|   |       http.go
+|   |       
+|   \---validatorPkg
+|           mobile_validator.go
+|           tags.go
+|           validator.go
+|           validator_impl.go
+|           
++---structure
+|       source.py
+|       
+\---tests
+    \---unit
+        +---mocks
+        |   +---db
+        |   |       dbtx_mock.go
+        |   |       querier_mock.go
+        |   |       
+        |   +---logger
+        |   |       logger_mock.go
+        |   |       
+        |   +---redis
+        |   |       redis_mock.go
+        |   |       
+        |   +---user
+        |   |       userHandler_mock.go
+        |   |       userRepository_mock.go
+        |   |       userService_mock.go
+        |   |       
+        |   \---validator
+        |           validator_mock.go
+        |           
+        \---user
+            +---handler
+            |       createUserHandler_test.go
+            |       listUsersHandler_test.go
+            |       
+            +---repository
+            |       listUsersRepository_test.go
+            |       
+            \---service
+                    createUserService_test.go
+                    listUsersService_test.go
+                    
