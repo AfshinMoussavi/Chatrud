@@ -36,6 +36,9 @@ jobs:
       - name: Install k6
         run: |
           sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:k6io/k6
+          sudo apt-get update
           sudo apt-get install -y k6
 
       - name: Run k6 load test
