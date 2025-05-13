@@ -42,8 +42,61 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
+      - name: Install migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/migrate
+          migrate -version
+
+      - name: Run database migrations
+        run: |
+          migrate -path models/migrations -database "postgres://postgres:1234@localhost:5432/test_chat_db?sslmode=disable" up
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: 1234
+          DB_NAME: test_chat_db
+
       - name: Wait for services
         run: sleep 10
 
       - name: Run tests
         run: go test ./...
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: 1234
+          DB_NAME: test_chat_db
+          REDIS_ADDR: localhost:6379
+          APP_ENV: test
+
+      - name: Install k6
+        run: |
+          curl -L https://github.com/grafana/k6/releases/download/v0.53.0/k6-v0.53.0-linux-amd64.tar.gz -o k6.tar.gz
+          tar -xzf k6.tar.gz
+          sudo mv k6-v0.53.0-linux-amd64/k6 /usr/local/bin/k6
+          k6 version
+
+      - name: Start Go application
+        run: |
+          go run ./cmd/main.go &
+          sleep 10
+        env:
+          APP_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: 1234
+          DB_NAME: test_chat_db
+          REDIS_ADDR: localhost:6379
+
+      - name: Run k6 load test
+        run: k6 run tests/load/load_test_create.js
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: 1234
+          DB_NAME: test_chat_db
