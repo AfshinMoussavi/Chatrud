@@ -82,7 +82,7 @@ jobs:
       - name: Start Go application
         run: |
           go run ./cmd/main.go &
-          sleep 10000
+          sleep 20
         env:
           APP_ENV: test
           DB_HOST: localhost
