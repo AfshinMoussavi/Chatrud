@@ -47,10 +47,10 @@ func TestCreateUserRepository_WithTestDB(t *testing.T) {
 	defer tx.Rollback()
 
 	input := db.CreateUserParams{
-		Name:     "testUser",
-		Email:    "test@example.com",
-		Phone:    "09150000000",
-		Password: "securepassword",
+		Name:     "thisIsTest",
+		Email:    "testtest@example.com",
+		Phone:    "09031303642",
+		Password: "hashed_password",
 	}
 
 	repo := user.NewRepository(txQueries)
