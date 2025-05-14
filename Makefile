@@ -40,6 +40,9 @@ mockery:
 tree:
 	tree /F /A
 
+test:
+	go test ./...
+
 .PHONY: postgresinit postgres createdb dropdb migrateup migratedown redisinit rediscli redislog stopredis stoppostgres swagger mockery tree
 
 
